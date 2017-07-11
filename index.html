@@ -24,13 +24,11 @@
 	<h1>Testando Desenho com Canvas</h1>
 
 	<canvas id="image"></canvas>
-	<img id="imageCanvas" alt="Imagem do Canvas" crossOrigin="Anonymous">
-	<a href="#" class="salvar">Salvar</a>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
 	<!-- forma livre -->
 	<script>
-		const largura = 800
+		const largura = document.body.clientWidth
 		const altura = 500
 
 		const canvas = document.querySelector('#image')
@@ -53,7 +51,8 @@
 				ctx.stroke()
 			}
 		}
-
+// para desabilitar o click utilizar o jquery
+// $('seletor').click('false')
 	//<!-- pinned -->
 
 		const positionMouse = (canvas, evt) => {
@@ -75,10 +74,13 @@
 			}
 		}
 		const draw_b = (evt) => {
-			canvas.addEventListener('dbclick', (evt) => {
-				let mousePos = positionMouse(canvas, evt)
+			const pin = []
+			canvas.addEventListener('click', (evt) => {
+				const mousePos = positionMouse(canvas, evt)
 				ctx.fillRect(`${mousePos.x}`, `${mousePos.y}`, 12, 12)
-				console.log(`${mousePos.x} ${mousePos.y}`)
+				// console.log(`${mousePos.x} ${mousePos.y}`)
+				pin.push({ x: mousePos.x, y: mousePos.y })
+				console.log(pin)
 			})
 		}
 		const startup = () => {
@@ -108,7 +110,7 @@
 
 	//<!-- salvar como imagem -->
 
-		const salvarImagem = new Imagem()
+		const salvarImagem = new Image()
 		salvarImagem.onload = () => {
 			console.log('Loaded image')
 			ctx.drawImage(image, 0, 0, canvas.width, canvas.height)

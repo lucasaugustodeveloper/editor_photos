@@ -10,7 +10,9 @@ const paths = {
 	sass: ['assets/sass']
 }
 
-gulp.task('default', () => {})
+gulp.task('default', () => {
+	gulp.start('server')
+})
 
 gulp.task('server', () => {
 	bs.init({
@@ -21,10 +23,10 @@ gulp.task('server', () => {
 		reloadOnRestart: true
 	})
 
-	gulp.watch('index.html', bs.reload)
-	gulp.watch(`${paths.css}/**/*.css`, bs.reload)
 	gulp.watch(`${paths.sass}/**/*.scss`, ['sass'])
+	gulp.watch('index.html', bs.reload)
 	gulp.watch(`${paths.js}/**/*.js`, bs.reload)
+	gulp.watch(`${paths.css}/**/*.css`, bs.reload)
 })
 
 gulp.task('sass', () => {

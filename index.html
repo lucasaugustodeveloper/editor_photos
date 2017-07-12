@@ -1,107 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 	<meta charset="UTF-8">
-	<title>Test</title>
+	<title>Editor de Imagem</title>
 	<link rel="stylesheet" href="assets/stylesheets/main.css">
 </head>
 <body>
-	<h1>Testando Desenho com Canvas</h1>
+	<div class="container-fluid">
+		<h1 class="center-xs">Editor de Imagem</h1>
+
+		<div class="row menu">
+			<nav class="col-lg-23">
+				<ul class="row">
+					<li class="col-lg-5 center-lg">
+						<button type="button">Forma Livre</button>
+					</li>
+					<li class="col-lg-4 center-lg">
+						<button type="button">Retangulo</button>
+					</li>
+					<li class="col-lg-3">
+						<button type="button">Quadrado</button>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<div class="row screen">
+			<div class="col-lg-12">
+				<canvas id="screen"></canvas>
+			</div>
+		</div>
+
+
+	</div>
 
 	<canvas id="image"></canvas>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
-	<!-- forma livre -->
-	<script>
-		const largura = document.body.clientWidth
-		const altura = 500
-
-		const canvas = document.querySelector('#image')
-		canvas.setAttribute('width', largura)
-		canvas.setAttribute('height', altura)
-
-		const ctx = canvas.getContext('2d')
-		let desenhando = false
-
-		canvas.onmousedown = (evt) => {
-			ctx.moveTo(evt.clientX, evt.clientY)
-			desenhando = true
-		}
-		canvas.onmouseup = () => {
-			desenhando = false
-		}
-		canvas.onmousemove = (evt) => {
-			if (desenhando) {
-				ctx.lineTo(evt.clientX, evt.clientY)
-				ctx.stroke()
-			}
-		}
-// para desabilitar o click utilizar o jquery
-// $('seletor').click('false')
-	//<!-- pinned -->
-
-		const positionMouse = (canvas, evt) => {
-			let obj = canvas
-			let top = 0
-			let left = 0
-			while (obj && obj.tagName != 'body') {
-				top += obj.offsetTop
-				left += obj.offsetLeft
-				obj = obj.offsetParent
-			}
-
-			let mouseX = evt.clientX - left + window.pageXOffset
-			let mouseY = evt.clientY - top + window.pageYOffset
-
-			return {
-				x: mouseX,
-				y: mouseY
-			}
-		}
-		const draw_b = (evt) => {
-			const pin = []
-			canvas.addEventListener('click', (evt) => {
-				const mousePos = positionMouse(canvas, evt)
-				ctx.fillRect(`${mousePos.x}`, `${mousePos.y}`, 12, 12)
-				// console.log(`${mousePos.x} ${mousePos.y}`)
-				pin.push({ x: mousePos.x, y: mousePos.y })
-				console.log(pin)
-			})
-		}
-		const startup = () => {
-			const el = document.querySelector('#image')
-			el.addEventListener('touchstart', draw_b, false)
-			// el.addEventListener('touchend', handleEnd, false)
-			// el.addEventListener('touchcancel', handleCancel, false)
-			// el.addEventListener('touchleave', handleEnd, false)
-			// el.addEventListener('touhcmove', handleMove, false)
-		}
-		draw_b()
-		// document.querySelector('body').addEventListener('click', function (evt) {
-		// 	const posX = evt.clientX, posY = evt.clientY
-		// 	console.log(`X: ${posX} | Y: ${posY}`)
-		// })
-
-
-		const bgImage = new Image()
-		bgImage.src = 'https://t1.uc.ltmcdn.com/pt/images/1/6/0/img_quanto_mede_um_campo_de_futebol_24061_orig.jpg'
-		ctx.drawImage(bgImage, 0, 0)
-
-	//<!-- text -->
-
-		ctx.font = '30px Consolas'
-		ctx.fillText('Hello World', 10, 50)
-
-
-	//<!-- salvar como imagem -->
-
-		const salvarImagem = new Image()
-		salvarImagem.onload = () => {
-			console.log('Loaded image')
-			ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
-			const savedImage = canvas.toDataURL()
-			window.open(savedImage)
-		}
-	</script>
+	<script src="assets/javascripts/jquery-3.2.1.min.js"></script>
+	<script src="assets/javascripts/modules/draw_free.js"></script>
+	<script src="assets/javascripts/modules/pinned.js"></script>
+	<script src="assets/javascripts/main.js"></script>
 </body>
 </html>

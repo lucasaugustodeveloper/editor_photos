@@ -4,6 +4,15 @@
 	'partials/grid',
 	'partials/reset';
 
-body {
-	background: colors(color, medium);
+
+.container {
+	background: colors(color, base);
+}
+
+#screen {
+	background: green;
+}
+
+.col-lg-12 {
+	background: #ccc;
 }

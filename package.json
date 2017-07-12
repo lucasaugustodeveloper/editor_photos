@@ -1,0 +1,15 @@
+{
+  "name": "editor-de-imagens",
+  "version": "1.0.0",
+  "description": "desenvolvimento de um editor de imagens para contrução cívil",
+  "main": "index.js",
+  "repository": "git@bitbucket.org:monstroestudio/editor-de-imagens.git",
+  "author": "\"Lucas Augusto lucas.augusto5061@gmail.com\"",
+  "license": "MIT",
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-sass": "^3.1.0"
+  }
+}

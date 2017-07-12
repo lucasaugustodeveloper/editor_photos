@@ -1,0 +1,9 @@
+@import
+	'partials/colors',
+	'partials/mixins',
+	'partials/grid',
+	'partials/reset';
+
+body {
+	background: colors(color, medium);
+}

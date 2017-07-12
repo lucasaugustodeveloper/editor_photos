@@ -21,7 +21,6 @@ const draw_pin = (evt) => {
 	canvas.addEventListener('click', (evt) => {
 		const mousePos = positionMouse(canvas, evt)
 		ctx.fillRect(`${mousePos.x}`, `${mousePos.y}`, 12, 12)
-		// console.log(`${mousePos.x} ${mousePos.y}`)
 		pin.push({ x: mousePos.x, y: mousePos.y })
 		console.log(pin)
 	})

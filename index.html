@@ -10,23 +10,34 @@
 		<h1 class="center-xs">Editor de Imagem</h1>
 
 		<div class="row menu">
-			<nav class="col-lg-23">
+			<nav class="col-lg-12">
 				<ul class="row">
-					<li class="col-lg-5 center-lg">
-						<button type="button">Forma Livre</button>
+					<li class="col-lg-1 center-lg">
+						<button type="button" class="draw_free">Forma Livre</button>
 					</li>
-					<li class="col-lg-4 center-lg">
-						<button type="button">Retangulo</button>
+					<li class="col-lg-1 center-lg">
+						<button type="button" class="form_rectagle">Retangulo</button>
 					</li>
-					<li class="col-lg-3">
-						<button type="button">Quadrado</button>
+					<li class="col-lg-1">
+						<button type="button" class="form_square">Quadrado</button>
+					</li>
+					<li class="col-lg-1">
+						<button type="button" class="pinned">Pinned</button>
+					</li>
+					<li class="col-lg-1">
+						<button type="button" class="insertText">Texto</button>
+					</li>
+					<li class="col-lg-1">
+						<button type="button" class="salve">Salvar</button>
 					</li>
 				</ul>
 			</nav>
 		</div>
 		<div class="row screen">
 			<div class="col-lg-12">
-				<canvas id="screen"></canvas>
+				<canvas id="screen">
+					Seu navegador não suporta HTML5.
+				</canvas>
 			</div>
 		</div>
 
@@ -37,6 +48,11 @@
 	<script src="assets/javascripts/jquery-3.2.1.min.js"></script>
 	<script src="assets/javascripts/modules/draw_free.js"></script>
 	<script src="assets/javascripts/modules/pinned.js"></script>
+	<script src="assets/javascripts/modules/text.js"></script>
+	<script src="assets/javascripts/modules/draw_circle.js"></script>
+	<script src="assets/javascripts/modules/draw_square.js"></script>
+	<script src="assets/javascripts/modules/draw_rectagle.js"></script>
 	<script src="assets/javascripts/main.js"></script>
+	<script src="assets/javascripts/modules/background.js"></script>
 </body>
 </html>

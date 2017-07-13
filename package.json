@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "gulp": "gulp",
-    "server": "gulp server",
-    "webpack": "webpack"
+    "server": "http-server .",
+    "webpack": "webpack",
+    "watch": "webpack-watch-server"
   },
   "repository": "git@bitbucket.org:monstroestudio/editor-de-imagens.git",
   "author": "\"Lucas Augusto lucas.augusto5061@gmail.com\"",
@@ -16,6 +17,8 @@
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
     "gulp-sass": "^3.1.0",
-    "webpack": "^3.2.0"
+    "http-server": "^0.10.0",
+    "webpack": "^3.2.0",
+    "webpack-watch-server": "^1.0.0"
   }
 }

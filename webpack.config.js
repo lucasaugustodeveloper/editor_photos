@@ -13,5 +13,11 @@ module.exports = {
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, './assets/javascripts')
+    },
+    watch: true,
+    watchOptions: {
+        aggregateTimeout: 300,
+        poll: 1000,
+        ignored: /node_modules/
     }
 }

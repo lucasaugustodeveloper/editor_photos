@@ -19,4 +19,3 @@ btnText.on('click', () => {
 	insertText(canvas, ctx, 'Lucas')
 })
 
-

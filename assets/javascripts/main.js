@@ -1,21 +1,138 @@
-const canvas = document.querySelector('#screen')
-const screen_width = $('.screen').width() - 34
-const screen_height = 800
-const btnText = $('.insertText')
+const configCanvas = (id, width, height) => {
+  const canvas = document.querySelector(`${id}`)
+  const context = canvas.getContext('2d')
+  canvas.setAttribute('width', width)
+  canvas.setAttribute('height', height)
 
-canvas.setAttribute('width', screen_width)
-canvas.setAttribute('height', screen_height)
+  return {
+    context,
+    canvas
+  }
+}
+const mousePosition = (canvas, evt) => {
+  let obj = canvas
+  let top = 0
+  let left = 0
 
-const ctx = canvas.getContext('2d')
+  while (obj && obj.tagName !== 'body') {
+    top += obj.offsetTop
+    left += obj.offsetLeft
+    obj = obj.offsetParent
+  }
+
+  let mouseX = (evt.clientX - (left + window.pageXOffset)) - 2.5
+  let mouseY = (evt.clientY - (top + window.pageYOffset)) - 2.5
+
+  return {
+    x: mouseX,
+    y: mouseY
+  }
+}
+const draws = (data) => {
+  const drawing = []
+  drawing.push(data)
+  console.log(drawing)
+}
+const drawFree = (canvas, context) => {
+  let drawing = false
+
+  canvas.onmousedown = (evt) => {
+    context.moveTo(evt.clientX, evt.clientY)
+    drawing = true
+  }
+  canvas.onmouseup = () => {
+    drawing = false
+  }
+  canvas.onmousemove = (evt) => {
+    if (drawing) {
+      context.lineTo(evt.clientX, evt.clientY)
+      context.stroke()
+    }
+  }
+}
+const drawPin = (canvas, context, evt) => {
+  const pin = []
+  canvas.addEventListener('click', (e) => {
+    const mousePos = mousePosition(canvas, e)
+    context.fillRect(`${mousePos.x}`, `${mousePos.y}`, 10, 10)
+    pin.push({
+      drawPin: {
+        x: mousePos.x,
+        y: mousePos.y
+      }
+    })
+  })
+}
+const drawCircle = (canvas, context, radius, evt) => {
+  const circle = []
+  canvas.addEventListener('click', (evt) => {
+    const mousePos = mousePosition(canvas, evt)
+    context.beginPath()
+    context.arc(`${mousePos.x}`, `${mousePos.y}`, `${radius}`, 0, Math.PI * 2)
+    context.closePath()
+    context.stroke()
+    circle.push({
+      circle: {
+        x: mousePos.x,
+        y: mousePos.y
+      }
+    })
+  })
+}
+const drawSquare = (canvas, context, width, height, evt) => {
+  const square = []
+  canvas.addEventListener('click', (evt) => {
+    const mousePos = mousePosition(canvas, evt)
+    context.rect(`${mousePos.x}`, `${mousePos.y}`, `${width}`, `${height}`)
+    context.stroke()
+    square.push({
+      square: {
+        x: mousePos.x,
+        y: mousePos.y
+      }
+    })
+    console.log(square)
+  })
+}
+const background = (context, width, height) => {
+  const image = new Image()
+  image.src = 'https://vignette4.wikia.nocookie.net/naruto/images/d/dc/Naruto%27s_Sage_Mode.png'
+  context.drawImage(image, 0, 0, width, height)
+}
+const saveCanvas = (canvas, btnSave) => {
+  const imgData = canvas.toDataURL()
+  const btnSave = document.querySelector(`${btnSave}`)
+
+  canvas.src = imgData
+
+  btnSave.addEventListener('click', (e) => {
+    this.href = imgData
+    this.download = 'canvas.png'
+    return false
+  });
+}
+const clearCanvas = (context, canvas) => {
+  context.clearRect(0, 0, canvas.width, canvas.height)
+}
+const screen = {
+  width: 900,
+  height: 600
+}
+
+const canvas = configCanvas('#canvas', screen.width, screen.height)
+// drawPin(canvas.canvas, canvas.context)
+// drawFree(canvas.canvas, canvas.context)
+// drawCircle(canvas.canvas, canvas.context, 15)
+// drawSquare(canvas.canvas, canvas.context, 15, 15)
+background(canvas.context, screen.width, screen.height)
 
 
-
-draw_free(canvas, ctx)
-// draw_pin()
-// drawCircle(ctx, 150, 150, 50, 50)
-// drawSquare(ctx, 150, 150, 150, 150)
-
-btnText.on('click', () => {
-	insertText(canvas, ctx, 'Lucas')
+document.querySelector('.btnClear').addEventListener('click', (e) => {
+  clearCanvas(canvas.context, canvas.canvas)
 })
-
+// document.querySelector('.btnCircle').addEventListener('click', (e) => {
+//     drawCircle(canvas.canvas, canvas.context, 15)
+// })
+// document.querySelector('.btnPin').addEventListener('click', (e) => {
+//     drawPin(canvas.canvas, canvas.context)
+// })

@@ -1,5 +1,5 @@
-const zoom = (inputZoom) => {
-	const inputZoom = document.querySelector(`${inputZoom}`)
+const zoom = (id) => {
+	const inputZoom = document.querySelector(`${id}`)
 	inputZoom.onchange = () => {
 		// fazer alguma coisa
 	}

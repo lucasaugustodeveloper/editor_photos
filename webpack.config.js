@@ -12,7 +12,7 @@ module.exports = {
     },
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, './assets/javascripts')
+        path: path.resolve(__dirname, './dist')
     },
     watch: true,
     watchOptions: {

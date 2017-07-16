@@ -2,6 +2,10 @@ const gulp = require('gulp')
 const bs = require('browser-sync')
 const sass = require('gulp-sass')
 const prefixer = require('gulp-autoprefixer')
+const concat = require('gulp-concat')
+const gutil = require('gulp-util')
+const pump = require('pump')
+const babili = require('gulp-babili')
 
 const paths = {
 	css: ['assets/stylesheets'],
@@ -14,7 +18,7 @@ gulp.task('default', () => {
 	gulp.start('server')
 })
 
-gulp.task('server', () => {
+gulp.task('livereload', () => {
 	bs.init({
 		server: {
 			baseDir: './'
@@ -35,8 +39,18 @@ gulp.task('sass', () => {
 			outputStyle: 'compressed'
 		}).on('error', sass.logError))
 		.pipe(prefixer({
-			browsers: ['last 10 version', 'ie 10', 'ie 9'],
-			cascade: false
+			browsers: ['last 10 version', 'ie 10', 'ie 9']
 		}))
 		.pipe(gulp.dest('assets/stylesheets'))
+})
+
+gulp.task('concat-js', () => {
+  gulp.src(`${paths.js}/modules/*.js`)
+    .pipe(concat('main.min.js'))
+    .pipe(babili({
+      mangle: {
+        keepClassName: true
+      }
+    }).on('error', gutil.log))
+    .pipe(gulp.dest('assets/javascripts'))
 })

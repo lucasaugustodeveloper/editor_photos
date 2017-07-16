@@ -4,10 +4,9 @@
   "description": "desenvolvimento de um editor de imagens para contrução cívil",
   "main": "index.js",
   "scripts": {
-    "gulp": "gulp",
+    "gulp": "gulp server",
     "server": "http-server .",
-    "webpack": "webpack",
-    "watch": "webpack-watch-server"
+    "webpack": "webpack"
   },
   "repository": "git@bitbucket.org:monstroestudio/editor-de-imagens.git",
   "author": "\"Lucas Augusto lucas.augusto5061@gmail.com\"",
@@ -16,10 +15,12 @@
     "browser-sync": "^2.18.12",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
+    "gulp-babili": "^0.1.4",
     "gulp-concat": "^2.6.1",
     "gulp-sass": "^3.1.0",
-    "gulp-uglify": "^3.0.0",
+    "gulp-util": "^3.0.8",
     "http-server": "^0.10.0",
+    "pump": "^1.0.2",
     "webpack": "^3.2.0"
   }
 }

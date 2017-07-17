@@ -1,5 +1,5 @@
 const screenSize = {
-  width: $('.screen').width() - 17,
+  width: document.querySelector('.screen').clientWidth,
   height: 900
 }
 const config = (id, width, height) => {
@@ -65,6 +65,7 @@ const drawPin = (canvas, context, evt) => {
         y: mousePos.y
       }
     })
+    console.log(pin)
   })
 }
 const drawCircle = (canvas, context, radius, evt) => {
@@ -99,29 +100,39 @@ const drawSquare = (canvas, context, width, height, evt) => {
     console.log(square)
   })
 }
-const saveCanvas = (canvas, btnSave) => {
+const drawText = (canvas, context, text) => {
+  const contentText = []
+  canvas.addEventListener('click', (evt) => {
+    const mousePos = mousePosition(canvas, evt)
+    context.font = '2rem Monaco'
+    context.fillText(`${text}`, `${mousePos.x - 15}`, `${mousePos.y + 15}`)
+    contentText.push({
+      content: text,
+      x: mousePos.x,
+      y: mousePos.y
+    })
+    console.log(contentText)
+  })
+}
+const saveCanvas = (canvas, id) => {
   const imgData = canvas.toDataURL()
-  const $btnSave = document.querySelector(`${btnSave}`)
+  const btnSave = document.querySelector(`${id}`)
 
   canvas.src = imgData
 
-  $btnSave.addEventListener('click', (e) => {
+  btnSave.addEventListener('click', (e) => {
     this.href = imgData
     this.download = 'canvas.png'
     return false
   });
 }
+const clearCanvas = (canvas) => {
+  canvas.width = canvas.width
+}
 
 const canvas = config('#screen', screenSize.width, screenSize.height)
 const screen = canvas.canvas
 const context = canvas.context
-
-const removeClick = (form) => {
-  screen.removeEventListener('click', form)
-}
-const debug = (text) => {
-  console.log(text)
-}
 
 const bgImage = new Image()
 bgImage.src = 'assets/images/planta.jpg'
@@ -143,6 +154,13 @@ window.onload = () => {
 // document.querySelector('.form_circle').addEventListener('click', (e) => {
 //     drawCircle(screen, context, 50)
 // })
-// document.querySelector('.pinned').addEventListener('click', (e) => {
-//     drawPin(screen, context)
+document.querySelector('.pinned').addEventListener('click', (e) => {
+    drawPin(screen, context)
+})
+// document.querySelector('.insertText').addEventListener('click', () => {
+//   drawText(screen, context, 'Lucas')
 // })
+document.querySelector('.clear_canvas').addEventListener('click', () => {
+  clearCanvas(screen)
+  context.drawImage(bgImage, 0, 0, screen.width, screen.height)
+})

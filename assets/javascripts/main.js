@@ -1,3 +1,7 @@
+const screenSize = {
+  width: $('.screen').width() - 17,
+  height: 900
+}
 const config = (id, width, height) => {
   const canvas = document.querySelector(`${id}`)
   const context = canvas.getContext('2d')
@@ -70,6 +74,7 @@ const drawCircle = (canvas, context, radius, evt) => {
     context.beginPath()
     context.arc(`${mousePos.x}`, `${mousePos.y}`, `${radius}`, 0, Math.PI * 2)
     context.closePath()
+    context.fill()
     context.stroke()
     circle.push({
       circle: {
@@ -106,16 +111,17 @@ const saveCanvas = (canvas, btnSave) => {
     return false
   });
 }
-const clearCanvas = (context, canvas) => {
-  context.clearRect(0, 0, canvas.width, canvas.height)
-}
-const screen = {
-  width: $('.screen').width() - 17,
-  height: 900
-}
 
-const canvas = config('#screen', screen.width, screen.height)
+const canvas = config('#screen', screenSize.width, screenSize.height)
+const screen = canvas.canvas
 const context = canvas.context
+
+const removeClick = (form) => {
+  screen.removeEventListener('click', form)
+}
+const debug = (text) => {
+  console.log(text)
+}
 
 const bgImage = new Image()
 bgImage.src = 'assets/images/planta.jpg'
@@ -132,11 +138,11 @@ window.onload = () => {
 
 
 // document.querySelector('.btnClear').addEventListener('click', (e) => {
-//   clearCanvas(canvas.context, canvas.canvas)
+//   clearCanvas(context, canvas.canvas)
 // })
-document.querySelector('.form_circle').addEventListener('click', (e) => {
-    drawCircle(canvas.canvas, context, 50)
-})
-// document.querySelector('.btnPin').addEventListener('click', (e) => {
-//     drawPin(canvas.canvas, canvas.context)
+// document.querySelector('.form_circle').addEventListener('click', (e) => {
+//     drawCircle(screen, context, 50)
+// })
+// document.querySelector('.pinned').addEventListener('click', (e) => {
+//     drawPin(screen, context)
 // })

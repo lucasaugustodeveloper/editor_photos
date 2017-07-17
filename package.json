@@ -4,7 +4,7 @@
   "description": "desenvolvimento de um editor de imagens para contrução cívil",
   "main": "index.js",
   "scripts": {
-    "gulp": "gulp server",
+    "gulp": "gulp livereload",
     "server": "http-server .",
     "webpack": "webpack"
   },

@@ -4,7 +4,6 @@ const sass = require('gulp-sass')
 const prefixer = require('gulp-autoprefixer')
 const concat = require('gulp-concat')
 const gutil = require('gulp-util')
-const pump = require('pump')
 const babili = require('gulp-babili')
 
 const paths = {

@@ -113,11 +113,17 @@ const screen = {
   width: $('.screen').width() - 17,
   height: 900
 }
-const bgImage = new Image()
-bgImage.src = 'http://www.pedradeitauna.com.br/files/2013/04/Planta-2-coluna-6.jpg'
-canvas.context.drawImage(bgImage, 0, 0, screen.width, screen.height)
 
 const canvas = config('#screen', screen.width, screen.height)
+const context = canvas.context
+
+const bgImage = new Image()
+bgImage.src = 'assets/images/planta.jpg'
+
+window.onload = () => {
+  context.drawImage(bgImage, 0, 0, screen.width, screen.height)
+}
+
 // drawPin(canvas.canvas, canvas.context)
 // drawFree(canvas.canvas, canvas.context)
 // drawCircle(canvas.canvas, canvas.context, 15)
@@ -129,7 +135,7 @@ const canvas = config('#screen', screen.width, screen.height)
 //   clearCanvas(canvas.context, canvas.canvas)
 // })
 document.querySelector('.form_circle').addEventListener('click', (e) => {
-    drawCircle(canvas.canvas, canvas.context, 50)
+    drawCircle(canvas.canvas, context, 50)
 })
 // document.querySelector('.btnPin').addEventListener('click', (e) => {
 //     drawPin(canvas.canvas, canvas.context)

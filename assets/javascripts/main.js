@@ -33,6 +33,7 @@ const mousePosition = (canvas, evt) => {
   }
 }
 const drawFree = (canvas, context) => {
+  const draw = []
   let desenho = false
 
   canvas.onmousedown = (evt) => {
@@ -48,6 +49,10 @@ const drawFree = (canvas, context) => {
     if (desenho && drawing === 'free') {
       context.lineTo(evt.clientX, evt.clientY)
       context.stroke()
+      draw.push({
+        x: evt.clientX,
+        y: evt.clientY
+      })
     }
   }
 }
@@ -138,20 +143,6 @@ const clearCanvas = (canvas, context) => {
   canvas.width = canvas.width
   context.drawImage(bgImage, 0, 0, screen.width, screen.height)
 }
-
-const canvas = config('#screen', screenSize.width, screenSize.height)
-const screen = canvas.canvas
-const context = canvas.context
-
-const bgImage = new Image()
-bgImage.src = 'assets/images/planta.jpg'
-
-window.onload = () => {
-  context.drawImage(bgImage, 0, 0, screen.width, screen.height)
-}
-
-let drawing
-
 const draw = (screen, context, x, y) => {
   switch (drawing) {
     case 'circle':
@@ -173,6 +164,19 @@ const draw = (screen, context, x, y) => {
   }
 }
 
+const canvas = config('#screen', screenSize.width, screenSize.height)
+const screen = canvas.canvas
+const context = canvas.context
+
+const bgImage = new Image()
+bgImage.src = 'assets/images/planta.jpg'
+
+window.onload = () => {
+  context.drawImage(bgImage, 0, 0, screen.width, screen.height)
+}
+
+let drawing = 'free'
+
 document.querySelector('.comment').addEventListener('click', () => {
   drawing = 'pin'
 }, true)
@@ -181,9 +185,6 @@ document.querySelector('.form_circle').addEventListener('click', () => {
 }, true)
 document.querySelector('.form_square').addEventListener('click', () => {
   drawing = 'square'
-}, true)
-document.querySelector('.insertText').addEventListener('click', () => {
-  drawing = 'text'
 }, true)
 document.querySelector('.draw_free').addEventListener('click', () => {
   drawing = 'free'
@@ -201,4 +202,4 @@ screen.addEventListener('click', (e) => {
   draw(screen, context, mousePos.x, mousePos.y)
 }, true)
 
-
+drawFree(screen, context)

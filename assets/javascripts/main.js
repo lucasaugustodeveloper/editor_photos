@@ -141,26 +141,23 @@ window.onload = () => {
   context.drawImage(bgImage, 0, 0, screen.width, screen.height)
 }
 
-// drawPin(canvas.canvas, canvas.context)
-// drawFree(canvas.canvas, canvas.context)
-// drawCircle(canvas.canvas, canvas.context, 15)
-// drawSquare(canvas.canvas, canvas.context, 15, 15)
+let drawing = 'free'
 
-
-
-// document.querySelector('.btnClear').addEventListener('click', (e) => {
-//   clearCanvas(context, canvas.canvas)
-// })
-// document.querySelector('.form_circle').addEventListener('click', (e) => {
-//     drawCircle(screen, context, 50)
-// })
-document.querySelector('.pinned').addEventListener('click', (e) => {
-    drawPin(screen, context)
-})
-// document.querySelector('.insertText').addEventListener('click', () => {
-//   drawText(screen, context, 'Lucas')
-// })
-document.querySelector('.clear_canvas').addEventListener('click', () => {
-  clearCanvas(screen)
-  context.drawImage(bgImage, 0, 0, screen.width, screen.height)
-})
+const draw = () => {
+  switch (drawing) {
+    case 'circle':
+      // circle
+      break
+    case 'square':
+      // square
+      break
+    case 'text':
+      // text
+      break
+    case 'pin':
+      // pin
+    default:
+      // free
+      break
+  }
+}

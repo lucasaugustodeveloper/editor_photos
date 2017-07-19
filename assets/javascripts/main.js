@@ -141,13 +141,7 @@ const drawForm = (canvas, form) => {
       canvas.style.cursor = "crosshair"
     }
   }
-}
-const drawCircle = () => {
-  drawForm(divScreen, 'circle')
-}
-const drawSquare = () => {
-  drawForm(divScreen, 'square')
-  console.log('draw square')
+  console.log(form)
 }
 const drawText = (text, x, y) => {
   const contentText = []
@@ -182,7 +176,7 @@ const clearCanvas = (canvas, context) => {
 const draw = (x, y) => {
   switch (drawing) {
     case 'circle':
-      drawForm(divScreen, 'circle')
+      drawCircle()
       break
     case 'square':
       drawForm(divScreen, 'square')
@@ -205,21 +199,27 @@ window.onload = () => {
 }
 
 document.querySelector('.comment').addEventListener('click', () => {
+  divScreen.removeEventListener('click', drawForm(divScreen, 'circle'), true)
   drawing = 'pin'
 }, true)
+
 document.querySelector('.form_circle').addEventListener('click', () => {
-  drawing = 'circle'
+  divScreen.addEventListener('click', drawForm(divScreen, 'circle'), true)
 }, true)
+
 document.querySelector('.form_square').addEventListener('click', () => {
-  drawing = 'square'
+  divScreen.addEventListener('click', drawForm(divScreen, 'square'), true)
 }, true)
+
 document.querySelector('.draw_free').addEventListener('click', () => {
   drawing = 'free'
 }, true)
+
 document.querySelector('.download').addEventListener('click', () => {
   const btnDownload = document.querySelector('.download')
   downloadCanvas(btnDownload, '#screen', 'test.png')
-}, false)
+}, true)
+
 document.querySelector('.clear_canvas').addEventListener('click', () => {
   clearCanvas(screen, context)
 }, true)

@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "gulp": "gulp livereload",
+    "min-js": "gulp concat-js",
     "server": "http-server .",
     "webpack": "webpack"
   },

@@ -2,6 +2,9 @@ const screenSize = {
   width: document.querySelector('.screen').clientWidth - 17,
   height: 900
 }
+const bgImage = new Image()
+bgImage.src = 'assets/images/planta.jpg'
+
 const config = (id, width, height) => {
   const canvas = document.querySelector(`${id}`)
   const context = canvas.getContext('2d')
@@ -13,6 +16,12 @@ const config = (id, width, height) => {
     canvas
   }
 }
+const canvas = config('#screen', screenSize.width, screenSize.height)
+const screen = canvas.canvas
+const context = canvas.context
+const divScreen = document.querySelector('.canvas')
+let drawing
+
 const mousePosition = (canvas, evt) => {
   let obj = canvas
   let top = 0
@@ -86,33 +95,59 @@ const drawPin = (context, x, y) => {
     })
     // console.log(pin)
 }
-const drawCircle = (context, x, y, radius, evt) => {
-  const circle = []
-  context.beginPath()
-  context.arc(`${x + 2}`, `${y + 6}`, `${radius}`, 0, 2 * Math.PI)
-  context.closePath()
-  context.fill()
-  context.stroke()
-  circle.push({
-    circle: {
-      x: x,
-      y: y
+const drawForm = (canvas, form) => {
+  let mouse = {
+      x: 0,
+      y: 0,
+      startX: 0,
+      startY: 0
+  };
+  let element = null; 
+
+  const setMousePosition = (e) => {
+    const ev = e || window.event; //Moz || IE
+    if (ev.pageX) { //Moz
+      mouse.x = ev.pageX + window.pageXOffset
+      mouse.y = ev.pageY + window.pageYOffset
+    } else if (ev.clientX) { //IE
+      mouse.x = ev.clientX + document.body.scrollLeft
+      mouse.y = ev.clientY + document.body.scrollTop
     }
-  })
+  }
+
+  canvas.onmousemove = (e) => {
+    setMousePosition(e)
+    if (element !== null) {
+      element.style.width = Math.abs(mouse.x - mouse.startX) + 'px'
+      element.style.height = Math.abs(mouse.y - mouse.startY) + 'px'
+      element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px'
+      element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px'
+    }
+  }
+  canvas.onclick = (e) => {
+    setMousePosition(e)
+    if (element !== null) {
+      element = null;
+      canvas.style.cursor = "default"
+    }
+    else {
+      mouse.startX = mouse.x
+      mouse.startY = mouse.y
+      element = document.createElement('div')
+      element.className = (form === 'square') ? 'rectangle' : 'circle'
+      element.style.left = mouse.x + 'px'
+      element.style.top = mouse.y + 'px'
+      canvas.appendChild(element)
+      canvas.style.cursor = "crosshair"
+    }
+  }
 }
-const drawSquare = (context, x, y, width, height, evt) => {
-  const square = []
-  context.beginPath()
-  context.rect(`${x - 50}`, `${y - 50}`, `${width}`, `${height}`)
-  context.closePath()
-  context.fill()
-  context.stroke()
-  square.push({
-    square: {
-      x: x,
-      y: y
-    }
-  })
+const drawCircle = () => {
+  drawForm(divScreen, 'circle')
+}
+const drawSquare = () => {
+  drawForm(divScreen, 'square')
+  console.log('draw square')
 }
 const drawText = (text, x, y) => {
   const contentText = []
@@ -144,20 +179,20 @@ const clearCanvas = (canvas, context) => {
   canvas.width = canvas.width
   context.drawImage(bgImage, 0, 0, screen.width, screen.height)
 }
-const draw = (screen, context, x, y) => {
+const draw = (x, y) => {
   switch (drawing) {
     case 'circle':
-      drawCircle(context, x, y, 20)
+      drawForm(divScreen, 'circle')
       break
     case 'square':
-      drawSquare(context, x, y, 100, 100)
+      drawForm(divScreen, 'square')
       break
     case 'pin':
       drawText('Lucas', x, y)
       drawPin(context, x, y, 20)
       break
     case 'free':
-      drawFree(context, x, y)
+      drawFree(screen, context, x, y)
       break
     default:
       console.log('Selecione um botão para desenha')
@@ -165,18 +200,9 @@ const draw = (screen, context, x, y) => {
   }
 }
 
-const canvas = config('#screen', screenSize.width, screenSize.height)
-const screen = canvas.canvas
-const context = canvas.context
-
-const bgImage = new Image()
-bgImage.src = 'assets/images/planta.jpg'
-
 window.onload = () => {
   context.drawImage(bgImage, 0, 0, screen.width, screen.height)
 }
-
-let drawing = 'free'
 
 document.querySelector('.comment').addEventListener('click', () => {
   drawing = 'pin'
@@ -196,11 +222,9 @@ document.querySelector('.download').addEventListener('click', () => {
 }, false)
 document.querySelector('.clear_canvas').addEventListener('click', () => {
   clearCanvas(screen, context)
-}, false)
+}, true)
 
 screen.addEventListener('click', (e) => {
   const mousePos = mousePosition(screen, e)
-  draw(screen, context, mousePos.x, mousePos.y)
+  draw(mousePos.x, mousePos.y)
 }, true)
-
-drawFree(screen, context)

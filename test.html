@@ -1,36 +1,43 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>Untitled Document</title>
+<title>Create Div with MouseMove</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <style type="text/css">
 #canvas {
-  background: #ccc;
+    background: #ccc;
+    display: block;
     width:2000px;
     height:2000px;
     border: 10px solid transparent;
 }
 .rectangle, .circle {
-    border: 1px solid #FF0000;
+    background:  orange;
+    border: .2rem solid black;
     position: absolute;
 }
 .circle {
-  border-radius: 50%;
+  border-radius: 100%;
 }
 </style>
 </head>
 <body>
-<div id="Canvas" style="width:500px; height:500px; border: 10px solid transparent;"></div>
-<script type="text/JavaScript">
-  initDraw(document.querySelector('#canvas'));
-
-
-
-function initDraw(canvas) {
-    function setMousePosition(e) {
-        var ev = e || window.event; //Moz || IE
+<button class="btnSquare" type="button">Square</button>
+<button class="btnCircle" type="button">Circle</button>
+<div id="canvas" style="width:500px; height:500px; border: 10px solid transparent;"></div>
+<script>
+ const initDraw = (canvas, form) => {
+    let mouse = {
+        x: 0,
+        y: 0,
+        startX: 0,
+        startY: 0
+    };
+    let element = null;
+    const setMousePosition = (e) => {
+        const ev = e || window.event; //Moz || IE
         if (ev.pageX) { //Moz
             mouse.x = ev.pageX + window.pageXOffset;
             mouse.y = ev.pageY + window.pageYOffset;
@@ -38,18 +45,9 @@ function initDraw(canvas) {
             mouse.x = ev.clientX + document.body.scrollLeft;
             mouse.y = ev.clientY + document.body.scrollTop;
         }
-        // console.log(ev)
-    };
+    };    
 
-    var mouse = {
-        x: 0,
-        y: 0,
-        startX: 0,
-        startY: 0
-    };
-    var element = null;
-
-    canvas.onmousemove = function (e) {
+    canvas.onmousemove = (e) => {
         setMousePosition(e);
         if (element !== null) {
             element.style.width = Math.abs(mouse.x - mouse.startX) + 'px';
@@ -58,19 +56,15 @@ function initDraw(canvas) {
             element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px';
         }
     }
-
-    canvas.onclick = function (e) {
+    canvas.onclick = (e) => {
         if (element !== null) {
             element = null;
             canvas.style.cursor = "default";
-            console.log("finsihed.");
         } else {
-            console.log("begun.");
             mouse.startX = mouse.x;
             mouse.startY = mouse.y;
             element = document.createElement('div');
-            element.className = 'rectangle'
-            // element.className = 'circle'
+            element.className = (form === 'square') ? 'rectangle' : 'circle'
             element.style.left = mouse.x + 'px';
             element.style.top = mouse.y + 'px';
             canvas.appendChild(element)
@@ -78,6 +72,14 @@ function initDraw(canvas) {
         }
     }
 }
+// initDraw(document.querySelector('#canvas'), 'circle');
+document.querySelector('.btnCircle').addEventListener('click', () => {
+    initDraw(document.querySelector('#canvas'), 'circle');
+}, true)
+document.querySelector('.btnSquare').addEventListener('click', () => {
+    initDraw(document.querySelector('#canvas'), 'square');
+}, true)
+
 </script>
 </body>
 </html>

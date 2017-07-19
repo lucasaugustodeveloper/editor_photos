@@ -35,6 +35,7 @@ const mousePosition = (canvas, evt) => {
 const drawFree = (canvas, context) => {
   const draw = []
   let desenho = false
+    
 
   canvas.onmousedown = (evt) => {
     if (drawing !== 'free') return

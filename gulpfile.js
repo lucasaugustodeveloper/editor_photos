@@ -44,7 +44,7 @@ gulp.task('sass', () => {
 })
 
 gulp.task('concat-js', () => {
-  gulp.src(`${paths.js}/modules/*.js`)
+  gulp.src(`${paths.js}/main.js`)
     .pipe(concat('main.min.js'))
     .pipe(babili({
       mangle: {

@@ -27,7 +27,7 @@ gulp.task('livereload', () => {
 	})
 
 	gulp.watch(`${paths.sass}/**/*.scss`, ['sass'])
-	gulp.watch('index.html', bs.reload)
+	gulp.watch(['index.html', 'test.html'], bs.reload)
 	gulp.watch(`${paths.js}/**/*.js`, bs.reload)
 	gulp.watch(`${paths.css}/**/*.css`, bs.reload)
 })

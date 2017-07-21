@@ -44,12 +44,12 @@ const mousePosition = (canvas, evt) => {
 const drawFree = (canvas, context) => {
   const draw = []
   let desenho = false
-    
+
 
   canvas.onmousedown = (evt) => {
     if (drawing !== 'free') return
 
-    context.moveTo(evt.clientX, evt.clientY)
+    context.moveTo( (evt.clientX - 30), (evt.clientY - 20) )
     desenho = true
   }
   canvas.onmouseup = () => {
@@ -57,9 +57,12 @@ const drawFree = (canvas, context) => {
   }
   canvas.onmousemove = (evt) => {
     if (desenho && drawing === 'free') {
-      context.lineTo(evt.clientX, evt.clientY)
+      context.lineTo( (evt.clientX - 30), (evt.clientY - 20) )
+      context.lineWidth = 5
+      context.strokeStyle = 'green'
       context.stroke()
       draw.push({
+        type: 'form free',
         x: evt.clientX,
         y: evt.clientY
       })
@@ -102,7 +105,7 @@ const drawForm = (canvas, form) => {
       startX: 0,
       startY: 0
   };
-  let element = null; 
+  let element = null;
 
   const setMousePosition = (e) => {
     const ev = e || window.event; //Moz || IE
@@ -143,15 +146,108 @@ const drawForm = (canvas, form) => {
   }
   console.log(form)
 }
+const drawCircle = (canvas) => {
+  let mouse = {
+    x: 0,
+    y: 0,
+    startX: 0,
+    startY: 0
+  };
+  let info = {
+    type: 'circle',
+    width: 0,
+    height: 0
+  }
+  let element = null;
+  const setMousePosition = (e) => {
+    const ev = e || window.event; //Moz || IE
+    if (ev.pageX) { //Moz
+      mouse.x = ev.pageX + window.pageXOffset
+      mouse.y = ev.pageY + window.pageYOffset
+    } else if (ev.clientX) { //IE
+      mouse.x = ev.clientX + document.body.scrollLeft
+      mouse.y = ev.clientY + document.body.scrollTop
+    }
+  }
+
+  canvas.onmousemove = (e) => {
+    setMousePosition(e)
+    if (element !== null) {
+      element.style.width = Math.abs(mouse.x - mouse.startX) + 'px'
+      element.style.height = Math.abs(mouse.y - mouse.startY) + 'px'
+      element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px'
+      element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px'
+    }
+  }
+  canvas.onmousedown = (e) => {
+    if ( drawing !== 'circle' ) return
+    setMousePosition(e)
+    mouse.startX = mouse.x
+    mouse.startY = mouse.y
+    element = document.createElement('div')
+    element.className = 'circle'
+    element.style.left = mouse.x + 'px'
+    element.style.top = mouse.y + 'px'
+    canvas.appendChild(element)
+
+  }
+  canvas.onmouseup = (e) => {
+    setMousePosition(e)
+    if (element !== null) {
+      element = null;
+    }
+  }
+}
+const drawSquare = (canvas) => {
+  let mouse = {
+      x: 0,
+      y: 0,
+      startX: 0,
+      startY: 0
+  };
+  let element = null;
+
+  const setMousePosition = (e) => {
+    const ev = e || window.event; //Moz || IE
+    if (ev.pageX) { //Moz
+      mouse.x = ev.pageX + window.pageXOffset
+      mouse.y = ev.pageY + window.pageYOffset
+    } else if (ev.clientX) { //IE
+      mouse.x = ev.clientX + document.body.scrollLeft
+      mouse.y = ev.clientY + document.body.scrollTop
+    }
+  }
+
+  canvas.onmousemove = (e) => {
+    setMousePosition(e)
+    if (element !== null) {
+      element.style.width = Math.abs(mouse.x - mouse.startX) + 'px'
+      element.style.height = Math.abs(mouse.y - mouse.startY) + 'px'
+      element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px'
+      element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px'
+    }
+  }
+  canvas.onmousedown = (e) => {
+    if (drawing !== 'square') return
+    setMousePosition(e)
+    mouse.startX = mouse.x
+    mouse.startY = mouse.y
+    element = document.createElement('div')
+    element.className = 'rectangle'
+    element.style.left = mouse.x + 'px'
+    element.style.top = mouse.y + 'px'
+    canvas.appendChild(element)
+
+  }
+  canvas.onmouseup = (e) => {
+    setMousePosition(e)
+    if (element !== null) {
+      element = null;
+    }
+  }
+}
 const drawText = (text, x, y) => {
   const contentText = []
-  context.font = '2rem Monaco'
-  context.fillText(`${text}`, `${x - 15}`, `${y + 15}`)
-  contentText.push({
-    content: text,
-    x: x,
-    y: y
-  })
 }
 const saveCanvas = (canvas, id) => {
   const imgData = canvas.toDataURL()
@@ -176,14 +272,13 @@ const clearCanvas = (canvas, context) => {
 const draw = (x, y) => {
   switch (drawing) {
     case 'circle':
-      drawCircle()
+      drawCircle(divScreen)
       break
     case 'square':
-      drawForm(divScreen, 'square')
+      drawSquare(divScreen)
       break
     case 'pin':
-      drawText('Lucas', x, y)
-      drawPin(context, x, y, 20)
+      //
       break
     case 'free':
       drawFree(screen, context, x, y)
@@ -193,38 +288,50 @@ const draw = (x, y) => {
       break
   }
 }
+const test = (canvas, div) => {
+  canvas.addEventListener('mousedown', () => {
+    console.log('click canvas')
+  }, false)
 
+  div.addEventListener('mousedown', () => {
+    console.log('click divScreen')
+  }, false)
+}
 window.onload = () => {
   context.drawImage(bgImage, 0, 0, screen.width, screen.height)
 }
 
-document.querySelector('.comment').addEventListener('click', () => {
-  divScreen.removeEventListener('click', drawForm(divScreen, 'circle'), true)
+document.querySelector('.comment').addEventListener('click', (e) => {
   drawing = 'pin'
-}, true)
+  const mousePos = mousePosition(screen, e)
+  draw(mousePos.x, mousePos.y)
+}, false)
 
-document.querySelector('.form_circle').addEventListener('click', () => {
-  divScreen.addEventListener('click', drawForm(divScreen, 'circle'), true)
-}, true)
+document.querySelector('.form_circle').addEventListener('click', (e) => {
+  drawing = 'circle'
+  draw()
+}, false)
 
-document.querySelector('.form_square').addEventListener('click', () => {
-  divScreen.addEventListener('click', drawForm(divScreen, 'square'), true)
-}, true)
+document.querySelector('.form_square').addEventListener('click', (e) => {
+  drawing = 'square'
+  draw()
+}, false)
 
-document.querySelector('.draw_free').addEventListener('click', () => {
+document.querySelector('.draw_free').addEventListener('click', (e) => {
   drawing = 'free'
-}, true)
+  const mousePos = mousePosition(screen, e)
+  draw(mousePos.x, mousePos.y)
+}, false)
 
 document.querySelector('.download').addEventListener('click', () => {
   const btnDownload = document.querySelector('.download')
   downloadCanvas(btnDownload, '#screen', 'test.png')
-}, true)
+}, false)
 
 document.querySelector('.clear_canvas').addEventListener('click', () => {
   clearCanvas(screen, context)
-}, true)
+}, false)
 
-screen.addEventListener('click', (e) => {
-  const mousePos = mousePosition(screen, e)
-  draw(mousePos.x, mousePos.y)
-}, true)
+document.querySelector('.test').addEventListener('click', () => {
+  test(screen, divScreen)
+}, false)

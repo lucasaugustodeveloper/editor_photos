@@ -288,15 +288,7 @@ const draw = (x, y) => {
       break
   }
 }
-const test = (canvas, div) => {
-  canvas.addEventListener('mousedown', () => {
-    console.log('click canvas')
-  }, false)
 
-  div.addEventListener('mousedown', () => {
-    console.log('click divScreen')
-  }, false)
-}
 window.onload = () => {
   context.drawImage(bgImage, 0, 0, screen.width, screen.height)
 }
@@ -330,8 +322,4 @@ document.querySelector('.download').addEventListener('click', () => {
 
 document.querySelector('.clear_canvas').addEventListener('click', () => {
   clearCanvas(screen, context)
-}, false)
-
-document.querySelector('.test').addEventListener('click', () => {
-  test(screen, divScreen)
 }, false)

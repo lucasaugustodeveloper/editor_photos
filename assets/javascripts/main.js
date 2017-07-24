@@ -291,6 +291,12 @@ const draw = (x, y) => {
 
 window.onload = () => {
   context.drawImage(bgImage, 0, 0, screen.width, screen.height)
+
+  $('.zoom-input').on('change', () => {
+    $('body').css({
+      'zoom': $('.zoom-input').val()
+    })
+  })
 }
 
 document.querySelector('.comment').addEventListener('click', (e) => {

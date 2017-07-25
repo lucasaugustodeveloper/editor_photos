@@ -69,34 +69,33 @@ const drawFree = (canvas, context) => {
     }
   }
 }
-const drawPin = (context, x, y) => {
+const drawPin = (canvas) => {
   const pin = []
 
-    context.save()
-    context.translate (x, y)
+  if (drawing !== 'pin') return
 
-    context.beginPath()
-    context.moveTo(0, 0)
-    context.bezierCurveTo(2, -10, -20, -25, 0, -30)
-    context.bezierCurveTo(20, -25, -2, -10, 0, 0)
-    context.fillStyle = 'orange'
-    context.fill()
-    context.strokeStyle = 'black'
-    context.lineWidth = 1.5
-    context.stroke()
-    context.beginPath()
-    context.arc(0, -21, 3, 0, Math.PI * 2)
-    context.closePath()
-    context.fillStyle = 'black'
-    context.fill()
-    context.restore()
-    pin.push({
-      drawPin: {
-        x: x,
-        y: y
-      }
-    })
-    // console.log(pin)
+  canvas.addEventListener('click', (e) => {
+    const pos = mousePosition(canvas, e)
+    const pin = document.createElement('div')
+    const comment = document.createElement('div')
+
+    comment.classList.add('comment')
+    comment.setAttribute('contenteditable', true)
+    pin.classList.add('pinned')
+    pin.classList.add('isActive')
+
+
+    if ( (pos.x + 320) >= $('.canvas').width() ) comment.style.left = '-330px'
+
+    pin.style.left = `${pos.x + 7}px`
+    pin.style.top = `${pos.y - 27}px`
+
+    comment.textContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate eius nam omnis consequatur at non sequi maiores fugit eum tempora dignissimos esse vel neque, molestias quibusdam? Magnam ipsam error quas! Enim atque, odit quasi soluta nihil ex commodi corporis quas repellendus consequatur et, blanditiis laudantium, illo dicta eum voluptates nesciunt totam vel aut quibusdam asperiores quia, eius fuga. Repudiandae quae cum laudantium possimus itaque doloribus dolore vitae ut beatae veritatis alias deleniti doloremque numquam odio velit ex architecto soluta ad illum repellendus, autem adipisci eaque animi facere. Suscipit officia vitae itaque! Nam temporibus, ullam quasi quos. Facilis possimus, corporis beatae.'
+
+    divScreen.appendChild(pin)
+    pin.appendChild(comment)
+    comment.focus()
+  }, false)
 }
 const drawForm = (canvas, form) => {
   let mouse = {
@@ -181,13 +180,14 @@ const drawCircle = (canvas) => {
   }
   canvas.onmousedown = (e) => {
     if ( drawing !== 'circle' ) return
+
     setMousePosition(e)
-    mouse.startX = mouse.x
-    mouse.startY = mouse.y
+    mouse.startX = (mouse.x - 25)
+    mouse.startY = (mouse.y - 30)
     element = document.createElement('div')
     element.className = 'circle'
-    element.style.left = mouse.x + 'px'
-    element.style.top = mouse.y + 'px'
+    element.style.left = (mouse.x - 25) + 'px'
+    element.style.top = (mouse.y - 30) + 'px'
     canvas.appendChild(element)
 
   }
@@ -246,9 +246,6 @@ const drawSquare = (canvas) => {
     }
   }
 }
-const drawText = (text, x, y) => {
-  const contentText = []
-}
 const saveCanvas = (canvas, id) => {
   const imgData = canvas.toDataURL()
   const btnSave = document.querySelector(`${id}`)
@@ -278,7 +275,7 @@ const draw = (x, y) => {
       drawSquare(divScreen)
       break
     case 'pin':
-      //
+      drawPin(screen)
       break
     case 'free':
       drawFree(screen, context, x, y)
@@ -293,16 +290,29 @@ window.onload = () => {
   context.drawImage(bgImage, 0, 0, screen.width, screen.height)
 
   $('.zoom-input').on('change', () => {
-    $('body').css({
+    $('.canvas').css({
       'zoom': $('.zoom-input').val()
     })
+  })
+  $('.canvas').on('click', '.pinned', function () {
+    let isActive = $(this).hasClass('isActive')
+    $('.pinned').removeClass('isActive')
+    if ( !isActive ) {
+      $(this).addClass('isActive')
+      $('.pinned .comment').focus()
+      isActive = null
+    }
+  })
+
+  $('#screen').on('click', () => {
+    $('.pinned').removeClass('isActive')
   })
 }
 
 document.querySelector('.comment').addEventListener('click', (e) => {
   drawing = 'pin'
   const mousePos = mousePosition(screen, e)
-  draw(mousePos.x, mousePos.y)
+  draw()
 }, false)
 
 document.querySelector('.form_circle').addEventListener('click', (e) => {

@@ -90,7 +90,7 @@ const drawPin = (canvas) => {
     pin.style.left = `${pos.x + 7}px`
     pin.style.top = `${pos.y - 27}px`
 
-    comment.textContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate eius nam omnis consequatur at non sequi maiores fugit eum tempora dignissimos esse vel neque, molestias quibusdam? Magnam ipsam error quas! Enim atque, odit quasi soluta nihil ex commodi corporis quas repellendus consequatur et, blanditiis laudantium, illo dicta eum voluptates nesciunt totam vel aut quibusdam asperiores quia, eius fuga. Repudiandae quae cum laudantium possimus itaque doloribus dolore vitae ut beatae veritatis alias deleniti doloremque numquam odio velit ex architecto soluta ad illum repellendus, autem adipisci eaque animi facere. Suscipit officia vitae itaque! Nam temporibus, ullam quasi quos. Facilis possimus, corporis beatae.'
+    comment.textContent = 'insirar seu comentário.'
 
     divScreen.appendChild(pin)
     pin.appendChild(comment)

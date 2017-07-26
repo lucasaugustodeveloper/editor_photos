@@ -243,7 +243,8 @@ const zoom = () => {
     $('#zoom_05').elevateZoom({
       zoomType: 'inner',
       cursor: 'crosshair',
-      resposive: true
+      resposive: true,
+      scrollZoom: true
     })
   }
   else {

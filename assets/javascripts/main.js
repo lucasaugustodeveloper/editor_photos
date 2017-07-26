@@ -1,6 +1,6 @@
 const screenSize = {
   width: document.querySelector('.screen').clientWidth - 17,
-  height: 900
+  height: 950
 }
 const bgImage = new Image()
 bgImage.src = 'assets/images/planta.jpg'
@@ -236,6 +236,24 @@ const clearCanvas = (canvas, context) => {
   canvas.width = canvas.width
   context.drawImage(bgImage, 0, 0, screen.width, screen.height)
 }
+const zoom = () => {
+  if ( $('#screen').hasClass('isActive') ) {
+    $('#screen').removeClass('isActive')
+    $('.zoom-wrapper').addClass('isActive')
+    $('#zoom_05').elevateZoom({
+      zoomType: 'inner',
+      cursor: 'crosshair',
+      resposive: true
+    })
+  }
+  else {
+    $('.zoom-wrapper').removeClass('isActive')
+    $('.zoomContainer').css({
+      'position': 'relative'
+    })
+    $('#screen').addClass('isActive')
+  }
+}
 const draw = (x, y) => {
   switch (drawing) {
     case 'circle':
@@ -249,6 +267,9 @@ const draw = (x, y) => {
       break
     case 'free':
       drawFree(screen, context, x, y)
+      break
+    case 'zoom':
+      zoom()
       break
     default:
       console.log('Selecione um botão para desenha')
@@ -310,3 +331,8 @@ document.querySelector('.download').addEventListener('click', (e) => {
 document.querySelector('.clear_canvas').addEventListener('click', () => {
   clearCanvas(screen, context)
 }, false)
+
+document.querySelector('.btn-zoom').addEventListener('click', () => {
+  drawing = 'zoom'
+  draw()
+})

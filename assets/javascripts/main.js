@@ -97,54 +97,6 @@ const drawPin = (canvas) => {
     comment.focus()
   }, false)
 }
-const drawForm = (canvas, form) => {
-  let mouse = {
-      x: 0,
-      y: 0,
-      startX: 0,
-      startY: 0
-  };
-  let element = null;
-
-  const setMousePosition = (e) => {
-    const ev = e || window.event; //Moz || IE
-    if (ev.pageX) { //Moz
-      mouse.x = ev.pageX + window.pageXOffset
-      mouse.y = ev.pageY + window.pageYOffset
-    } else if (ev.clientX) { //IE
-      mouse.x = ev.clientX + document.body.scrollLeft
-      mouse.y = ev.clientY + document.body.scrollTop
-    }
-  }
-
-  canvas.onmousemove = (e) => {
-    setMousePosition(e)
-    if (element !== null) {
-      element.style.width = Math.abs(mouse.x - mouse.startX) + 'px'
-      element.style.height = Math.abs(mouse.y - mouse.startY) + 'px'
-      element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px'
-      element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px'
-    }
-  }
-  canvas.onclick = (e) => {
-    setMousePosition(e)
-    if (element !== null) {
-      element = null;
-      canvas.style.cursor = "default"
-    }
-    else {
-      mouse.startX = mouse.x
-      mouse.startY = mouse.y
-      element = document.createElement('div')
-      element.className = (form === 'square') ? 'rectangle' : 'circle'
-      element.style.left = mouse.x + 'px'
-      element.style.top = mouse.y + 'px'
-      canvas.appendChild(element)
-      canvas.style.cursor = "crosshair"
-    }
-  }
-  console.log(form)
-}
 const drawCircle = (canvas) => {
   let mouse = {
     x: 0,
@@ -262,8 +214,6 @@ const saveCanvas = (canvas, id) => {
   });
 }
 const downloadCanvas = (screen) => {
-  // link.href = document.querySelector(canvas).toDataURL()
-  // link.download = filename
   const divCanvas = document.querySelector('.canvas')
   html2canvas(divCanvas,{
     allowTaint: true,

@@ -1,84 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-	<meta charset="UTF-8">
-	<title>Editor de Imagem</title>
-	<link rel="stylesheet" href="assets/stylesheets/main.css">
-  <style>
-    .rectangle, .circle {
-      border: .25rem solid green;
-      position: absolute;
-    }
-    .canvas {
-      position: relative;
-    }
-    .pinned {
-      background: url('assets/images/pin.svg') no-repeat;
-      background-size: 100%;
-      cursor: pointer;
-      width: 2rem;
-      height: 2rem;
-      position: absolute;
-    }
-    .pinned .comment {
-      display: none;
-      visibility: hidden;
-    }
-    .pinned.isActive .comment {
-      background: #eaeaea;
 
-      display: block;
-      visibility: visible;
+  <head>
+    <meta charset="UTF-8">
+    <title>Editor de Imagem</title>
+    <link rel="stylesheet" href="assets/stylesheets/main.css">
+  </head>
 
-      position: absolute;
-      left: 2.5rem;
-      top: 0;
-      width: 20rem;
-    }
-  </style>
-</head>
-<body>
-	<div class="container-fluid">
-		<h1 class="center-xs">Editor de Imagem</h1>
+  <body>
+    <div class="container-fluid">
+      <h1 class="center-xs">Editor de Imagem</h1>
 
-		<div class="row menu">
-      <nav class="col-lg-12">
-				<ul class="row">
-					<li class="col-lg-1 center-lg">
-						<button type="button" class="draw_free">Forma Livre</button>
-					</li>
-					<li class="col-lg-1">
-						<button type="button" class="form_square">Quadrado</button>
-                    </li>
-                    <li class="col-lg-1">
-                        <button class="form_circle" type="button">Circulo</button>
-                    </li>
-                    <li class="col-lg-1">
-                        <button type="button" class="comment">Comentário</button>
-                    </li>
-                    <li class="col-lg-1">
-                        <button type="button" class="salve">Salvar</button>
-                    </li>
-                    <li class="col-lg-1">
-                        <a href="" class="download">Download</a>
-                    </li>
-                    <li class="col-lg-1">
-                        <button class="clear_canvas" type="button">Limpa Área</button>
-                    </li>
-                </ul>
-			</nav>
-		</div>
-		<div class="row screen">
-			<div class="col-lg-12 canvas">
-                     <canvas id="screen">
-                        Seu navegador não suporta HTML5.
-                    </canvas>
-            </div>
+      <div class="row menu">
+        <nav class="col-lg-12">
+          <ul class="row">
+            <li class="col-lg-1 center-lg">
+              <button type="button" class="draw_free">Forma Livre</button>
+            </li>
+            <li class="col-lg-1">
+              <button type="button" class="form_square">Quadrado</button>
+            </li>
+            <li class="col-lg-1">
+              <button class="form_circle" type="button">Circulo</button>
+            </li>
+            <li class="col-lg-1">
+              <button type="button" class="comment">Comentário</button>
+            </li>
+            <li class="col-lg-1">
+              <button type="button" class="salve">Salvar</button>
+            </li>
+            <li class="col-lg-1">
+              <a href="" class="download">Download</a>
+            </li>
+            <li class="col-lg-1">
+              <button class="clear_canvas" type="button">Limpa Área</button>
+            </li>
+            <li class="col-lg-1">
+                <button type="button" class="btn-zoom">Zoom</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+       <div class="row screen">
+
+        <div class="col-lg-12 zoom-wrapper">
+          <img id="zoom_05" src="assets/images/planta.jpg" alt="" data-zoom-image="assets/images/planta.jpg">
+        </div>
+
+        <div class="col-lg-12 canvas">
+          <canvas id="screen" class="isActive">
+            Seu navegador não suporta HTML5.
+          </canvas>
+        </div>
+      </div>
+
     </div>
-  </div>
 
-  <script src="assets/javascripts/jquery.min.js"></script>
-  <script src="assets/javascripts/html2canvas.js"></script>
-  <script src="assets/javascripts/main.js"></script>
-</body>
+    <script src="assets/javascripts/jquery.min.js"></script>
+    <script src="assets/javascripts/html2canvas.js"></script>
+    <script src="assets/javascripts/elevateZoom.min.js"></script>
+    <script src="assets/javascripts/main.js"></script>
+  </body>
+
 </html>

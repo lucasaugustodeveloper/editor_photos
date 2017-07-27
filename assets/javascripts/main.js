@@ -21,6 +21,8 @@ const screen = canvas.canvas
 const context = canvas.context
 const divScreen = document.querySelector('.canvas')
 let drawing
+let click = 0
+let lastClick = [0, 0]
 
 const mousePosition = (canvas, evt) => {
   let obj = canvas
@@ -220,6 +222,31 @@ const zoom = () => {
     $('#screen').addClass('isActive')
   }
 }
+const ruler = (canvas, context) => {
+  canvas.addEventListener('click', (e) => {
+    const pos = mousePosition(canvas, e)
+    const rect = canvas.getBoundingClientRect()
+    let x = pos.x - canvas.offsetLeft
+    let y = pos.y - canvas.offsetTop
+
+    if ( click !== 1 ) {
+          click++
+    }
+    else {
+      context.beginPath()
+      context.moveTo(lastClick[0], lastClick[1])
+      context.lineTo(x, y, 6)
+      context.strokeStyle = 'black'
+      context.lineWidth = 5
+      context.stroke()
+
+      click = 0
+    }
+
+    lastClick = [x, y]
+
+  }, false)
+}
 const draw = (x, y) => {
   switch (drawing) {
     case 'circle':
@@ -236,6 +263,9 @@ const draw = (x, y) => {
       break
     case 'zoom':
       zoom()
+      break
+    case 'ruler':
+      ruler(screen, context)
       break
     default:
       console.log('Selecione um botão para desenha')
@@ -302,3 +332,8 @@ document.querySelector('.btn-zoom').addEventListener('click', () => {
   drawing = 'zoom'
   draw()
 })
+
+document.querySelector('.ruler').addEventListener('click', () => {
+  drawing = 'ruler'
+  draw()
+},false)

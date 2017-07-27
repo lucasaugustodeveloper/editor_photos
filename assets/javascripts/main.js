@@ -101,8 +101,6 @@ const drawPin = (canvas) => {
 }
 const drawCircle = (canvas) => {
   let mouse = {
-    x: 0,
-    y: 0,
     startX: 0,
     startY: 0
   };

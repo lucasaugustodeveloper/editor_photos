@@ -142,38 +142,25 @@ const drawCircle = (canvas) => {
 }
 const drawSquare = (canvas) => {
   let mouse = {
-      x: 0,
-      y: 0,
       startX: 0,
       startY: 0
   };
   let element = null;
 
-  const setMousePosition = (e) => {
-    const ev = e || window.event; //Moz || IE
-    if (ev.pageX) { //Moz
-      mouse.x = ev.pageX + window.pageXOffset
-      mouse.y = ev.pageY + window.pageYOffset
-    } else if (ev.clientX) { //IE
-      mouse.x = ev.clientX + document.body.scrollLeft
-      mouse.y = ev.clientY + document.body.scrollTop
-    }
-  }
-
   canvas.onmousemove = (e) => {
-    setMousePosition(e)
+    const pos = mousePosition(canvas, e)
     if (element !== null) {
-      element.style.width = Math.abs(mouse.x - mouse.startX) + 'px'
-      element.style.height = Math.abs(mouse.y - mouse.startY) + 'px'
-      element.style.left = (mouse.x - mouse.startX < 0) ? (mouse.x - 25) + 'px' : mouse.startX + 'px'
-      element.style.top = (mouse.y - mouse.startY < 0) ? (mouse.y - 42) + 'px' : mouse.startY + 'px'
+      element.style.width = Math.abs(pos.x - mouse.startX) + 'px'
+      element.style.height = Math.abs(pos.y - mouse.startY) + 'px'
+      element.style.left = (pos.x - mouse.startX < 0) ? (pos.x - 25) + 'px' : mouse.startX + 'px'
+      element.style.top = (pos.y - mouse.startY < 0) ? (pos.y - 42) + 'px' : mouse.startY + 'px'
     }
   }
   canvas.onmousedown = (e) => {
+    const pos = mousePosition(canvas, e)
     if (drawing !== 'square') return
-    setMousePosition(e)
-    mouse.startX = (mouse.x - 25)
-    mouse.startY = (mouse.y - 42)
+    mouse.startX = pos.x
+    mouse.startY = pos.y
     canvas.style.cursor = 'crosshair'
     element = document.createElement('div')
     element.className = 'rectangle'
@@ -183,7 +170,6 @@ const drawSquare = (canvas) => {
 
   }
   canvas.onmouseup = (e) => {
-    setMousePosition(e)
     canvas.style.cursor = 'default'
     if (element !== null) {
       element = null;

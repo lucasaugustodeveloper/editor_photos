@@ -177,16 +177,6 @@ const drawSquare = (canvas) => {
   }
 }
 const saveCanvas = (canvas, id) => {
-  const imgData = canvas.toDataURL()
-  const btnSave = document.querySelector(`${id}`)
-
-  canvas.src = imgData
-
-  btnSave.addEventListener('click', (e) => {
-    this.href = imgData
-    this.download = 'canvas.png'
-    return false
-  });
 }
 const downloadCanvas = (screen) => {
   const divCanvas = document.querySelector('.canvas')

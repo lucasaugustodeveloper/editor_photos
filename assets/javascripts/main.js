@@ -74,9 +74,9 @@ const drawFree = (canvas, context) => {
 const drawPin = (canvas) => {
   const pin = []
 
-  if (drawing !== 'pin') return
-
   canvas.addEventListener('click', (e) => {
+    if (drawing !== 'pin') return
+
     const pos = mousePosition(canvas, e)
     const pin = document.createElement('div')
     const comment = document.createElement('div')
@@ -90,7 +90,7 @@ const drawPin = (canvas) => {
     if ( (pos.x + 320) >= $('.canvas').width() ) comment.style.left = '-330px'
 
     pin.style.left = `${pos.x + 7}px`
-    pin.style.top = `${pos.y - 27}px`
+    pin.style.top = `${pos.y - 30}px`
 
     comment.textContent = 'insirar seu comentário.'
 
@@ -112,42 +112,31 @@ const drawCircle = (canvas) => {
     height: 0
   }
   let element = null;
-  const setMousePosition = (e) => {
-    const ev = e || window.event; //Moz || IE
-    if (ev.pageX) { //Moz
-      mouse.x = ev.pageX + window.pageXOffset
-      mouse.y = ev.pageY + window.pageYOffset
-    } else if (ev.clientX) { //IE
-      mouse.x = ev.clientX + document.body.scrollLeft
-      mouse.y = ev.clientY + document.body.scrollTop
-    }
-  }
 
   canvas.onmousemove = (e) => {
-    setMousePosition(e)
+    const pos = mousePosition(canvas, e)
     if (element !== null) {
-      element.style.width = Math.abs(mouse.x - mouse.startX) + 'px'
-      element.style.height = Math.abs(mouse.y - mouse.startY) + 'px'
-      element.style.borderRadius = (Math.abs(mouse.x - mouse.startX) / 2) + 'px'
-      element.style.left = (mouse.x - mouse.startX < 0) ? mouse.x + 'px' : mouse.startX + 'px'
-      element.style.top = (mouse.y - mouse.startY < 0) ? mouse.y + 'px' : mouse.startY + 'px'
+      element.style.width = Math.abs(pos.x - mouse.startX) + 'px'
+      element.style.height = Math.abs(pos.y - mouse.startY) + 'px'
+      element.style.borderRadius = (Math.abs(pos.x - mouse.startX) / 2) + 'px'
+      element.style.left = (pos.x - mouse.startX < 0) ? pos.x + 'px' : mouse.startX + 'px'
+      element.style.top = (pos.y - mouse.startY < 0) ? pos.y + 'px' : mouse.startY + 'px'
     }
   }
   canvas.onmousedown = (e) => {
-    if ( drawing !== 'circle' ) return
+    const pos = mousePosition(canvas, e)
+    if ( drawing !== 'circle' && drawing === 'pin' ) return
 
-    setMousePosition(e)
-    mouse.startX = (mouse.x - 25)
-    mouse.startY = (mouse.y - 30)
+    mouse.startX = pos.x
+    mouse.startY = pos.y
     element = document.createElement('div')
     element.className = 'circle'
-    element.style.left = (mouse.x - 25) + 'px'
-    element.style.top = (mouse.y - 30) + 'px'
+    element.style.left = (pos.x) + 'px'
+    element.style.top = (pos.y) + 'px'
     canvas.appendChild(element)
 
   }
   canvas.onmouseup = (e) => {
-    setMousePosition(e)
     if (element !== null) {
       element = null;
     }

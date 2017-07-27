@@ -47,17 +47,19 @@ const drawFree = (canvas, context) => {
 
 
   canvas.onmousedown = (evt) => {
+    const pos = mousePosition(canvas, evt)
     if (drawing !== 'free') return
 
-    context.moveTo( (evt.clientX - 30), (evt.clientY - 20) )
+    context.moveTo( ( pos.x ), ( pos.y ) )
     desenho = true
   }
   canvas.onmouseup = () => {
     return desenho = false
   }
   canvas.onmousemove = (evt) => {
+    const pos = mousePosition(canvas, evt)
     if (desenho && drawing === 'free') {
-      context.lineTo( (evt.clientX - 30), (evt.clientY - 20) )
+      context.lineTo( ( pos.x ), ( pos.y ) )
       context.lineWidth = 5
       context.strokeStyle = 'green'
       context.stroke()

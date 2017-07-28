@@ -1,6 +1,6 @@
 const screenSize = {
   width: document.querySelector('.container-canvas').clientWidth - 17,
-  height: 950
+  height: document.body.clientHeight
 }
 const bgImage = new Image()
 bgImage.src = 'assets/images/planta.jpg'

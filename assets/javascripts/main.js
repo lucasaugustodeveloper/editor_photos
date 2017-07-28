@@ -1,5 +1,5 @@
 const screenSize = {
-  width: document.querySelector('.screen').clientWidth - 17,
+  width: document.querySelector('.container-canvas').clientWidth - 17,
   height: 950
 }
 const bgImage = new Image()

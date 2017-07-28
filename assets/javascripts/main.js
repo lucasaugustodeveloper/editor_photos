@@ -129,7 +129,7 @@ const drawCircle = (canvas) => {
     mouse.startY = pos.y
     element = document.createElement('div')
     element.className = 'circle'
-    element.style.left = (pos.x + 127) + 'px'
+    element.style.left = (pos.x + 90) + 'px'
     element.style.top = pos.y + 'px'
     canvas.appendChild(element)
 
@@ -163,7 +163,7 @@ const drawSquare = (canvas) => {
     canvas.style.cursor = 'crosshair'
     element = document.createElement('div')
     element.className = 'rectangle'
-    element.style.left = (pos.x + 127) + 'px'
+    element.style.left = (pos.x + 90) + 'px'
     element.style.top = (pos.y) + 'px'
     canvas.appendChild(element)
 
@@ -178,7 +178,7 @@ const drawSquare = (canvas) => {
 const saveCanvas = (canvas, id) => {
 }
 const downloadCanvas = (screen) => {
-  const divCanvas = document.querySelector('.canvas')
+  const divCanvas = document.querySelector('.container-canvas')
   html2canvas(divCanvas,{
     allowTaint: true,
     logging: true,
@@ -188,7 +188,7 @@ const downloadCanvas = (screen) => {
     tempcanvas.width = screen.width
     tempcanvas.height = screen.height
     let context = tempcanvas.getContext('2d')
-    const link = document.createElement('a')
+    let link = document.createElement('a')
 
     context.drawImage(canvas, 0, 0, screen.width, screen.height)
     link.href = tempcanvas.toDataURL('image/jpg')
@@ -314,8 +314,7 @@ document.querySelector('.draw_free').addEventListener('click', (e) => {
 }, false)
 
 document.querySelector('.download').addEventListener('click', (e) => {
-  e.preventDefault()
-  const btnDownload = document.querySelector('.download')
+  // const btnDownload = document.querySelector('.download')
   downloadCanvas(screen)
 }, false)
 

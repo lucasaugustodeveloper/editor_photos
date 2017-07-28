@@ -19,7 +19,7 @@ const config = (id, width, height) => {
 const canvas = config('#screen', screenSize.width, screenSize.height)
 const screen = canvas.canvas
 const context = canvas.context
-const divScreen = document.querySelector('.canvas')
+const divScreen = document.querySelector('.container-canvas')
 let drawing
 let click = 0
 let lastClick = [0, 0]
@@ -119,24 +119,23 @@ const drawCircle = (canvas) => {
       element.style.width = Math.abs(pos.x - mouse.startX) + 'px'
       element.style.height = Math.abs(pos.y - mouse.startY) + 'px'
       element.style.borderRadius = (Math.abs(pos.x - mouse.startX) / 2) + 'px'
-      element.style.left = (pos.x - mouse.startX < 0) ? pos.x + 'px' : mouse.startX + 'px'
-      element.style.top = (pos.y - mouse.startY < 0) ? pos.y + 'px' : mouse.startY + 'px'
     }
   }
   canvas.onmousedown = (e) => {
     const pos = mousePosition(canvas, e)
     if ( drawing !== 'circle' && drawing === 'pin' ) return
 
-    mouse.startX = pos.x
+    mouse.startX = (pos.x)
     mouse.startY = pos.y
     element = document.createElement('div')
     element.className = 'circle'
-    element.style.left = (pos.x) + 'px'
-    element.style.top = (pos.y) + 'px'
+    element.style.left = (pos.x + 127) + 'px'
+    element.style.top = pos.y + 'px'
     canvas.appendChild(element)
 
   }
   canvas.onmouseup = (e) => {
+    console.log(`X: ${mouse.startX}, Y: ${mouse.startY}`)
     if (element !== null) {
       element = null;
     }
@@ -154,8 +153,6 @@ const drawSquare = (canvas) => {
     if (element !== null) {
       element.style.width = Math.abs(pos.x - mouse.startX) + 'px'
       element.style.height = Math.abs(pos.y - mouse.startY) + 'px'
-      element.style.left = (pos.x - mouse.startX < 0) ? (pos.x - 25) + 'px' : mouse.startX + 'px'
-      element.style.top = (pos.y - mouse.startY < 0) ? (pos.y - 42) + 'px' : mouse.startY + 'px'
     }
   }
   canvas.onmousedown = (e) => {
@@ -166,8 +163,8 @@ const drawSquare = (canvas) => {
     canvas.style.cursor = 'crosshair'
     element = document.createElement('div')
     element.className = 'rectangle'
-    element.style.left = (mouse.x - 25) + 'px'
-    element.style.top = (mouse.y - 42) + 'px'
+    element.style.left = (pos.x + 127) + 'px'
+    element.style.top = (pos.y) + 'px'
     canvas.appendChild(element)
 
   }

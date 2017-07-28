@@ -204,8 +204,8 @@ const clearCanvas = (canvas, context) => {
   context.drawImage(bgImage, 0, 0, screen.width, screen.height)
 }
 const zoom = () => {
-  if ( $('#screen').hasClass('isActive') ) {
-    $('#screen').removeClass('isActive')
+  if ($('.container-canvas').hasClass('isActive') ) {
+    $('.container-canvas').removeClass('isActive')
     $('.zoom-wrapper').addClass('isActive')
     $('#zoom_05').elevateZoom({
       zoomType: 'inner',
@@ -216,10 +216,8 @@ const zoom = () => {
   }
   else {
     $('.zoom-wrapper').removeClass('isActive')
-    $('.zoomContainer').css({
-      'position': 'relative'
-    })
-    $('#screen').addClass('isActive')
+    $('.zoomContainer').remove()
+    $('.container-canvas').addClass('isActive')
   }
 }
 const ruler = (canvas, context) => {

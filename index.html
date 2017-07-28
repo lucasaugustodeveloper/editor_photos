@@ -9,53 +9,50 @@
 
   <body>
     <div class="container-fluid">
-      <h1 class="center-xs">Editor de Imagem</h1>
 
-      <div class="row menu">
-        <nav class="col-lg-12">
-          <ul class="row">
-            <li class="col-lg-1 center-lg">
-              <button type="button" class="draw_free">Forma Livre</button>
-            </li>
-            <li class="col-lg-1">
-              <button type="button" class="form_square">Quadrado</button>
-            </li>
-            <li class="col-lg-1">
-              <button class="form_circle" type="button">Circulo</button>
-            </li>
-            <li class="col-lg-1">
-              <button type="button" class="comment">Comentário</button>
-            </li>
-            <li class="col-lg-1">
-              <button type="button" class="salve">Salvar</button>
-            </li>
-            <li class="col-lg-1">
-              <a href="" class="download">Download</a>
-            </li>
-            <li class="col-lg-1">
-              <button class="clear_canvas" type="button">Limpa Área</button>
-            </li>
-            <li class="col-lg-1">
-                <button type="button" class="btn-zoom">Zoom</button>
-            </li>
-            <li class="col-lg-1">
-                <button type="button" class="ruler">Régua</button>
-            </li>
-          </ul>
-        </nav>
-      </div>
-       <div class="row screen">
+        <main class="row screen">
+            <nav class="menu">
+               <ul>
+                    <li class="col-lg-12">
+                        <button type="button" class="salve">Salvar</button>
+                    </li>
+                    <li class="col-lg-12">
+                        <button type="button" class="draw_free">Forma Livre</button>
+                    </li>
+                    <li class="col-lg-12">
+                        <button type="button" class="form_square">Quadrado</button>
+                    </li>
+                    <li class="col-lg-12">
+                        <button class="form_circle" type="button">Circulo</button>
+                    </li>
+                    <li class="col-lg-12">
+                        <button type="button" class="comment">Comentário</button>
+                    </li>
+                    <li class="col-lg-12">
+                        <button type="button" class="download">Download</button>
+                    </li>
+                    <li class="col-lg-12">
+                        <button type="button" class="btn-zoom">Zoom</button>
+                    </li>
+                    <li class="col-lg-12">
+                        <button type="button" class="ruler">Régua</button>
+                    </li>
+                    <li class="col-lg-12">
+                        <button class="clear_canvas" type="button">Limpa Área</button>
+                    </li>
+                </ul>
+            </nav>
 
-        <div class="col-lg-12 zoom-wrapper">
-          <img id="zoom_05" src="assets/images/planta.jpg" alt="" data-zoom-image="assets/images/planta.jpg">
-        </div>
+            <div class="col-lg-11 zoom-wrapper">
+                <img id="zoom_05" src="assets/images/planta.jpg" alt="" data-zoom-image="assets/images/planta.jpg">
+            </div>
 
-        <div class="col-lg-12 canvas">
-          <canvas id="screen" class="isActive">
-            Seu navegador não suporta HTML5.
-          </canvas>
-        </div>
-      </div>
+            <div class="col-lg-11 container-canvas isActive">
+                <canvas id="screen">
+                    Seu navegador não suporta HTML5.
+                </canvas>
+            </div>
+      </main>
 
     </div>
 
